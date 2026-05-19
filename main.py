@@ -14,24 +14,42 @@
 # - nivel: nombre del nivel
 # - tipo: tipo de contenido (walkthrough, shortplay, etc.)
 # -----------------------------------------
+
+import json
+import random
+
+#🎮 Base de datos simple de videojuegos
+
+#📦 Cargar base de datos JSON
+with open("games.json","r",encoding="utf-8") as file:
+    game_database = json.load(file)
+
+#funciones para generar contenido
 def generar_titulo(juego, nivel, tipo):
 
-    # Convertimos el tipo a minúsculas para evitar errores de comparación
     tipo = tipo.lower()
 
-    # Condición 1: Si es walkthrough
     if tipo == "walkthrough":
-        # .upper() convierte el texto a mayúsculas
-        return f"{nivel.upper()} 100% WALKTHROUGH SIN MORIR 🚀 | {juego}"
+        opciones = [
+            f"{nivel.upper()} 100% WALKTHROUGH SIN MORIR 🚀 | {juego}",
+            f"GUÍA COMPLETA {nivel.upper()} 💯 | {juego}",
+            f"{nivel.upper()} PERFECT RUN ⚡ SIN FALLOS | {juego}"
+        ]
 
-    # Condición 2: Si es shortplay
     elif tipo == "shortplay":
-        return f"{nivel.upper()} ⚡ MOMENTOS CLAVE | {juego}"
+        opciones = [
+            f"{nivel.upper()} ⚡ MOMENTOS CLAVE | {juego}",
+            f"{nivel.upper()} EN 60 SEGUNDOS ⏱️ | {juego}",
+            f"{nivel.upper()} HIGHLIGHTS 🔥 | {juego}"
+        ]
 
-    # Caso por defecto (fallback)
     else:
-        return f"{nivel.upper()} GAMEPLAY 🚀 | {juego}"
+        opciones = [
+            f"{nivel.upper()} GAMEPLAY 🚀 | {juego}",
+            f"{nivel.upper()} NIVEL COMPLETO 🎮 | {juego}"
+        ]
 
+    return random.choice(opciones)
 
 # -----------------------------------------
 # FUNCIÓN: generar_descripcion
@@ -127,6 +145,8 @@ juego = input("Nombre del juego: ")
 nivel = input("Nombre del nivel: ")
 tipo = input("Tipo (Walkthrough / Shortplay): ")
 
+#Obtener datos del juego desde la base de datos
+datos_juego = game_database.get(juego)
 
 # -----------------------------------------
 # PROCESO (ejecución del sistema)
@@ -145,6 +165,16 @@ comentario = generar_comentario(nivel)
 # Mostramos los resultados en consola
 # -----------------------------------------
 print("\n🎬 TÍTULO:")
+#Mostrar informacion extra del juego
+if datos_juego:
+    print(f"🎮 Juego: {juego}")
+    print(f"🕹️ Plataforma: {datos_juego['plataforma']}")
+    print(f"🎭 Género: {datos_juego['genero']}")
+    print(f"⚡ Dificultad: {datos_juego['Dificultad']}")   
+    print("\n📚 Niveles Disponibles:")
+    for nivel_db in datos_juego["niveles"]:
+        print(f"- {nivel_db}")
+
 print(titulo)
 
 print("\n📝 DESCRIPCIÓN:")
