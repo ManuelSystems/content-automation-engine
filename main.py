@@ -16,6 +16,9 @@
 # -----------------------------------------
 
 import json
+#✅ Tipos validos permitidos
+tipos_validos = ["walkthrough", "shortplay"]
+
 import random
 
 #🎮 Base de datos simple de videojuegos
@@ -112,18 +115,42 @@ Gameplay del nivel.
 # -----------------------------------------
 # Devuelve hashtags según el tipo de contenido
 # -----------------------------------------
-def generar_hashtags(tipo):
+def generar_hashtags(tipo, datos_juego):
 
     tipo = tipo.lower()
+    hashtags = []
 
+    # hashtags por tipo 
     if tipo == "walkthrough":
-        return "#walkthrough #gaming #retrogaming #ps1"
+        hashtags.extend([
+            "#walkthrough",
+            "#gaming",
+            "#retrogaming"
+        ])
 
     elif tipo == "shortplay":
-        return "#shorts #gaming #retrogaming"
+        hashtags.extend([
+            "#shorts",
+            "#gaming",
+            "#retrogaming"
+        ])
 
-    else:
-        return "#gaming"
+    # Hashtags automaticos desde metadatos 
+    if datos_juego:
+        #Plataforma 
+        hashtags.append(f"#{datos_juego['plataforma']}")
+
+        #Genero 
+        genero = datos_juego["genero"].lower()
+
+        if genero == "plataformas":
+            hashtags.append("#platformer")
+
+        elif genero == "carreras": 
+            hashtags.append("racinggames")
+
+    #Convertir lista -> string
+    return " ".join(hashtags)
 
 
 # -----------------------------------------
@@ -141,12 +168,40 @@ def generar_comentario(nivel):
 # -----------------------------------------
 # Aquí el usuario introduce la información
 # -----------------------------------------
-juego = input("Nombre del juego: ")
-nivel = input("Nombre del nivel: ")
-tipo = input("Tipo (Walkthrough / Shortplay): ")
+juego = input("Nombre del juego: ").strip().lower()
+nivel = input("Nombre del nivel: ").strip()
+tipo = input("Tipo (Walkthrough / Shortplay): ").strip()
+#Convertir a minusculas 
+tipo = tipo.lower()
+
+#Validar tipo 
+if tipo not in tipos_validos:
+
+    print("\n ❌ ERROR: Tipo de contenido no valido.")
+    print("✅ Opciones validos:")
+
+    for tipo_valido in tipos_validos: 
+        print(f"- {tipo_valido}")
+
+    exit()
 
 #Obtener datos del juego desde la base de datos
 datos_juego = game_database.get(juego)
+
+#🔍 Smart Search System
+datos_juego = None 
+juego_encontrado = None 
+
+#Recorrer todos  los juegos de la base de datos 
+for nombre_juego in game_database:
+
+    #Coincidencia parcial
+    if juego in nombre_juego: 
+
+        juego_encontrado = nombre_juego 
+        datos_juego = game_database[nombre_juego]
+
+        break 
 
 # -----------------------------------------
 # PROCESO (ejecución del sistema)
@@ -167,10 +222,10 @@ comentario = generar_comentario(nivel)
 print("\n🎬 TÍTULO:")
 #Mostrar informacion extra del juego
 if datos_juego:
-    print(f"🎮 Juego: {juego}")
+    print(f"🎮 Juego: {juego_encontrado}")
     print(f"🕹️ Plataforma: {datos_juego['plataforma']}")
     print(f"🎭 Género: {datos_juego['genero']}")
-    print(f"⚡ Dificultad: {datos_juego['Dificultad']}")   
+    print(f"⚡ Dificultad: {datos_juego['dificultad']}")   
     print("\n📚 Niveles Disponibles:")
     for nivel_db in datos_juego["niveles"]:
         print(f"- {nivel_db}")
