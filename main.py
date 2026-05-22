@@ -190,7 +190,25 @@ datos_juego = game_database.get(juego)
 
 #🔍 Smart Search System
 datos_juego = None 
-juego_encontrado = None 
+juego_encontrado = None
+
+#❌ Si no se ha encontrado el juego
+
+if not datos_juego: 
+
+    print("\n❌ Juego no encontrado.")
+
+    print("\n💡 Sugerencias disponibles:")
+
+    #Mostrar juegos similares 
+    for nombre_juego in game_database:
+
+        #Coincidencia parcial simple 
+        if juego[:3] in nombre_juego:
+
+            print(f"- {nombre_juego}")
+
+    exit()     
 
 #Recorrer todos  los juegos de la base de datos 
 for nombre_juego in game_database:
