@@ -15,6 +15,8 @@
 # - tipo: tipo de contenido (walkthrough, shortplay, etc.)
 # -----------------------------------------
 
+import re
+
 import json
 #✅ Tipos validos permitidos
 tipos_validos = ["walkthrough", "shortplay"]
@@ -169,6 +171,9 @@ def generar_comentario(nivel):
 # Aquí el usuario introduce la información
 # -----------------------------------------
 juego = input("Nombre del juego: ").strip().lower()
+#Limpiar caracteres especiales
+juego = re.sub(r"[^a-z0-9\s]", "", juego)
+
 nivel = input("Nombre del nivel: ").strip()
 tipo = input("Tipo (Walkthrough / Shortplay): ").strip()
 #Convertir a minusculas 
@@ -194,21 +199,37 @@ juego_encontrado = None
 
 #❌ Si no se ha encontrado el juego
 
-if not datos_juego: 
+# ❌ Si no se encontró coincidencia exacta
 
-    print("\n❌ Juego no encontrado.")
+if not datos_juego:
 
-    print("\n💡 Sugerencias disponibles:")
+    sugerencias = []
 
-    #Mostrar juegos similares 
+    # Buscar sugerencias similares
     for nombre_juego in game_database:
 
-        #Coincidencia parcial simple 
-        if juego[:3] in nombre_juego:
+        if juego[:3] in nombre_juego.lower():
 
-            print(f"- {nombre_juego}")
+            sugerencias.append(nombre_juego)
 
-    exit()     
+    # Si hay sugerencias
+    if sugerencias:
+
+        print("\n💡 Quizás quisiste decir:\n")
+
+        for sugerencia in sugerencias:
+            print(f"- {sugerencia}")
+
+        # Tomar automáticamente la primera sugerencia
+        juego_encontrado = sugerencias[0]
+        datos_juego = game_database[juego_encontrado]
+
+        print(f"\n✅ Usando automáticamente: {juego_encontrado}")
+
+    else:
+
+        print("\n❌ Juego no encontrado.")
+        exit()
 
 #Recorrer todos  los juegos de la base de datos 
 for nombre_juego in game_database:
@@ -228,7 +249,7 @@ for nombre_juego in game_database:
 # -----------------------------------------
 titulo = generar_titulo(juego, nivel, tipo)
 descripcion = generar_descripcion(juego, nivel, tipo)
-hashtags = generar_hashtags(tipo)
+hashtags = generar_hashtags(tipo, datos_juego)
 comentario = generar_comentario(nivel)
 
 
