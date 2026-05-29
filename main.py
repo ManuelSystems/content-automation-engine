@@ -1,275 +1,168 @@
-# 🎮 GameContent Engine V2
-# -----------------------------------------
-# Este sistema genera contenido automático
-# para videos de gaming basado en reglas.
-# -----------------------------------------
+# 🎮 GameContent Engine V11
+# ==================================================
+# Archivo principal del sistema
+#
+# Responsabilidades:
+# 1. Cargar la base de datos gaming
+# 2. Recibir datos del usuario
+# 3. Validar entradas
+# 4. Buscar juegos
+# 5. Generar contenido
+# 6. Mostrar resultados
+# ==================================================
 
+# ==================================================
+# IMPORTACIONES
+# ==================================================
 
-# -----------------------------------------
-# FUNCIÓN: generar_titulo
-# -----------------------------------------
-# Genera un título dependiendo del tipo de contenido
-# Parámetros:
-# - juego: nombre del juego
-# - nivel: nombre del nivel
-# - tipo: tipo de contenido (walkthrough, shortplay, etc.)
-# -----------------------------------------
-
-import re
-
+# Permite trabajar con archivos JSON
 import json
-#✅ Tipos validos permitidos
-tipos_validos = ["walkthrough", "shortplay"]
 
-import random
+# Funciones auxiliares
+from utils import limpiar_texto
 
-#🎮 Base de datos simple de videojuegos
+# Motor de búsqueda
+from search_engine import buscar_juego
 
-#📦 Cargar base de datos JSON
-with open("games.json","r",encoding="utf-8") as file:
+# Generador de contenido
+from content_generator import (
+    generar_titulo,
+    generar_descripcion,
+    generar_comentario
+)
+
+# Motor de hashtags
+from hashtags_engine import generar_hashtags
+
+
+# ==================================================
+# CONFIGURACIÓN DEL SISTEMA
+# ==================================================
+
+# Tipos de contenido permitidos
+tipos_validos = [
+    "walkthrough",
+    "shortplay"
+]
+
+
+# ==================================================
+# CARGAR BASE DE DATOS
+# ==================================================
+
+# Abrir archivo JSON y convertirlo
+# a diccionario Python
+with open(
+    "games.json",
+    "r",
+    encoding="utf-8"
+) as file:
+
     game_database = json.load(file)
 
-#funciones para generar contenido
-def generar_titulo(juego, nivel, tipo):
 
-    tipo = tipo.lower()
+# ==================================================
+# INPUT DEL USUARIO
+# ==================================================
 
-    if tipo == "walkthrough":
-        opciones = [
-            f"{nivel.upper()} 100% WALKTHROUGH SIN MORIR 🚀 | {juego}",
-            f"GUÍA COMPLETA {nivel.upper()} 💯 | {juego}",
-            f"{nivel.upper()} PERFECT RUN ⚡ SIN FALLOS | {juego}"
-        ]
+# Solicitar nombre del juego
+# y limpiar caracteres especiales
+juego = limpiar_texto(
+    input("Nombre del juego: ")
+)
 
-    elif tipo == "shortplay":
-        opciones = [
-            f"{nivel.upper()} ⚡ MOMENTOS CLAVE | {juego}",
-            f"{nivel.upper()} EN 60 SEGUNDOS ⏱️ | {juego}",
-            f"{nivel.upper()} HIGHLIGHTS 🔥 | {juego}"
-        ]
+# Solicitar nivel
+nivel = input(
+    "Nombre del nivel: "
+).strip()
 
-    else:
-        opciones = [
-            f"{nivel.upper()} GAMEPLAY 🚀 | {juego}",
-            f"{nivel.upper()} NIVEL COMPLETO 🎮 | {juego}"
-        ]
-
-    return random.choice(opciones)
-
-# -----------------------------------------
-# FUNCIÓN: generar_descripcion
-# -----------------------------------------
-# Genera una descripción larga con formato dinámico
-# Usa plantillas de texto (templates)
-# -----------------------------------------
-def generar_descripcion(juego, nivel, tipo):
-
-    tipo = tipo.lower()
-
-    # Walkthrough (guía completa)
-    if tipo == "walkthrough":
-        return f"""
-🎮 {juego} - {nivel}
-
-🚀 Guía completa para completar este nivel al 100% y sin morir.
-
-💡 Aprende:
-✔ Rutas óptimas
-✔ Estrategias clave
-✔ Cómo evitar errores
-
-🔥 TIP: Mantén el ritmo y anticipa obstáculos.
-
-👉 ¿Qué nivel quieres ver después?
-
-#retrogaming #walkthrough #gaming
-"""
-
-    # Shortplay (contenido corto)
-    elif tipo == "shortplay":
-        return f"""
-🎮 {juego} - {nivel}
-
-⚡ Momentos clave de este nivel en formato corto.
-
-💡 Perfecto para ver jugadas rápidas y tips esenciales.
-
-👉 ¿Quieres la guía completa? Dímelo en comentarios.
-
-#shorts #gaming #retrogaming
-"""
-
-    # Caso por defecto
-    else:
-        return f"""
-🎮 {juego} - {nivel}
-
-Gameplay del nivel.
-
-👉 ¿Quieres más contenido como este?
-
-#gaming
-"""
+# Solicitar tipo de contenido
+tipo = input(
+    "Tipo (Walkthrough / Shortplay): "
+).strip().lower()
 
 
-# -----------------------------------------
-# FUNCIÓN: generar_hashtags
-# -----------------------------------------
-# Devuelve hashtags según el tipo de contenido
-# -----------------------------------------
-def generar_hashtags(tipo, datos_juego):
+# ==================================================
+# VALIDACIÓN DE DATOS
+# ==================================================
 
-    tipo = tipo.lower()
-    hashtags = []
-
-    # hashtags por tipo 
-    if tipo == "walkthrough":
-        hashtags.extend([
-            "#walkthrough",
-            "#gaming",
-            "#retrogaming"
-        ])
-
-    elif tipo == "shortplay":
-        hashtags.extend([
-            "#shorts",
-            "#gaming",
-            "#retrogaming"
-        ])
-
-    # Hashtags automaticos desde metadatos 
-    if datos_juego:
-        #Plataforma 
-        hashtags.append(f"#{datos_juego['plataforma']}")
-
-        #Genero 
-        genero = datos_juego["genero"].lower()
-
-        if genero == "plataformas":
-            hashtags.append("#platformer")
-
-        elif genero == "carreras": 
-            hashtags.append("racinggames")
-
-    #Convertir lista -> string
-    return " ".join(hashtags)
-
-
-# -----------------------------------------
-# FUNCIÓN: generar_comentario
-# -----------------------------------------
-# Genera un comentario fijo para engagement
-# Solo necesita el nivel
-# -----------------------------------------
-def generar_comentario(nivel):
-    return f"🔥 ¿Te gustó {nivel}? Comenta qué nivel quieres ver después."
-
-
-# -----------------------------------------
-# INPUT (entrada de datos)
-# -----------------------------------------
-# Aquí el usuario introduce la información
-# -----------------------------------------
-juego = input("Nombre del juego: ").strip().lower()
-#Limpiar caracteres especiales
-juego = re.sub(r"[^a-z0-9\s]", "", juego)
-
-nivel = input("Nombre del nivel: ").strip()
-tipo = input("Tipo (Walkthrough / Shortplay): ").strip()
-#Convertir a minusculas 
-tipo = tipo.lower()
-
-#Validar tipo 
+# Verificar que el tipo sea válido
 if tipo not in tipos_validos:
 
-    print("\n ❌ ERROR: Tipo de contenido no valido.")
-    print("✅ Opciones validos:")
+    print("\n❌ ERROR: Tipo de contenido no válido.")
+    print("✅ Opciones válidas:")
 
-    for tipo_valido in tipos_validos: 
+    for tipo_valido in tipos_validos:
         print(f"- {tipo_valido}")
 
     exit()
 
-#Obtener datos del juego desde la base de datos
-datos_juego = game_database.get(juego)
 
-#🔍 Smart Search System
-datos_juego = None 
-juego_encontrado = None
+# ==================================================
+# BÚSQUEDA DEL JUEGO
+# ==================================================
 
-#❌ Si no se ha encontrado el juego
+# Buscar juego dentro de la base de datos
+juego_encontrado, datos_juego = buscar_juego(
+    juego,
+    game_database
+)
 
-# ❌ Si no se encontró coincidencia exacta
-
+# Si no existe, terminar programa
 if not datos_juego:
-
-    sugerencias = []
-
-    # Buscar sugerencias similares
-    for nombre_juego in game_database:
-
-        if juego[:3] in nombre_juego.lower():
-
-            sugerencias.append(nombre_juego)
-
-    # Si hay sugerencias
-    if sugerencias:
-
-        print("\n💡 Quizás quisiste decir:\n")
-
-        for sugerencia in sugerencias:
-            print(f"- {sugerencia}")
-
-        # Tomar automáticamente la primera sugerencia
-        juego_encontrado = sugerencias[0]
-        datos_juego = game_database[juego_encontrado]
-
-        print(f"\n✅ Usando automáticamente: {juego_encontrado}")
-
-    else:
-
-        print("\n❌ Juego no encontrado.")
-        exit()
-
-#Recorrer todos  los juegos de la base de datos 
-for nombre_juego in game_database:
-
-    #Coincidencia parcial
-    if juego in nombre_juego: 
-
-        juego_encontrado = nombre_juego 
-        datos_juego = game_database[nombre_juego]
-
-        break 
-
-# -----------------------------------------
-# PROCESO (ejecución del sistema)
-# -----------------------------------------
-# Llamamos a cada función pasando los datos
-# -----------------------------------------
-titulo = generar_titulo(juego, nivel, tipo)
-descripcion = generar_descripcion(juego, nivel, tipo)
-hashtags = generar_hashtags(tipo, datos_juego)
-comentario = generar_comentario(nivel)
+    exit()
 
 
-# -----------------------------------------
-# OUTPUT (salida del sistema)
-# -----------------------------------------
-# Mostramos los resultados en consola
-# -----------------------------------------
+# ==================================================
+# GENERACIÓN DE CONTENIDO
+# ==================================================
+
+# Generar título dinámico
+titulo = generar_titulo(
+    juego_encontrado,
+    nivel,
+    tipo
+)
+
+# Generar descripción
+descripcion = generar_descripcion(
+    juego_encontrado,
+    nivel,
+    tipo
+)
+
+# Generar hashtags inteligentes
+hashtags = generar_hashtags(
+    tipo,
+    datos_juego
+)
+
+# Generar comentario fijado
+comentario = generar_comentario(
+    nivel
+)
+
+
+# ==================================================
+# SALIDA DE RESULTADOS
+# ==================================================
+
 print("\n🎬 TÍTULO:")
-#Mostrar informacion extra del juego
-if datos_juego:
-    print(f"🎮 Juego: {juego_encontrado}")
-    print(f"🕹️ Plataforma: {datos_juego['plataforma']}")
-    print(f"🎭 Género: {datos_juego['genero']}")
-    print(f"⚡ Dificultad: {datos_juego['dificultad']}")   
-    print("\n📚 Niveles Disponibles:")
-    for nivel_db in datos_juego["niveles"]:
-        print(f"- {nivel_db}")
 
-print(titulo)
+# Mostrar información del juego
+print(f"🎮 Juego: {juego_encontrado}")
+print(f"🕹️ Plataforma: {datos_juego['plataforma']}")
+print(f"🎭 Género: {datos_juego['genero']}")
+print(f"⚡ Dificultad: {datos_juego['dificultad']}")
+
+# Mostrar niveles registrados
+print("\n📚 Niveles Disponibles:")
+
+for nivel_db in datos_juego["niveles"]:
+    print(f"- {nivel_db}")
+
+# Mostrar contenido generado
+print("\n" + titulo)
 
 print("\n📝 DESCRIPCIÓN:")
 print(descripcion)

@@ -3,7 +3,7 @@
         "plataforma": "PS1",
         "genero": "Plataformas",
         "dificultad": "Media",
-        "Hashtags": "#crashbandicoot3 #PS1 #RetroGaming",
+        "hashtags": "#crashbandicoot3 #PS1 #RetroGaming",
         "niveles": [
             "Orient Express",
             "Gee Wiz",
@@ -21,7 +21,6 @@
         "niveles": [
             "Trial Mountain Circuit",
             "High Speed Ring"
-        ] 
+        ]
     }
-    
 }
