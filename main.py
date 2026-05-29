@@ -15,6 +15,8 @@
 # IMPORTACIONES
 # ==================================================
 
+from level_engine import validar_nivel 
+
 # Permite trabajar con archivos JSON
 import json
 
@@ -98,6 +100,7 @@ if tipo not in tipos_validos:
     exit()
 
 
+
 # ==================================================
 # BÚSQUEDA DEL JUEGO
 # ==================================================
@@ -110,6 +113,13 @@ juego_encontrado, datos_juego = buscar_juego(
 
 # Si no existe, terminar programa
 if not datos_juego:
+    exit()
+
+#-----------Motor Engine nivel-------------
+if not validar_nivel(
+    nivel,
+    datos_juego
+):
     exit()
 
 
