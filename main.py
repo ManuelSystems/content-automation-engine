@@ -31,6 +31,38 @@ def generar_descripcion(
     )
     return descripcion
 
+def generar_hashtags(juego):
+    palabras = juego.split()
+    hashtags = [] 
+
+    for palabra in palabras: 
+        hashtags.append(
+            f"#{palabra}"
+        )
+    
+    hashtags.append("#RetroGaming")
+    hashtags.append("#RetroGaming")
+    hashtags.append("#FullRetroGaming")
+
+    return " ".join(hashtags)
+
+def generar_comentario():
+
+    comentario = (
+        "🔥 Si te gustó este contenido, "
+        "suscríbete para más videojuegos.\n\n"
+        "🎮 FullRetroGaming"
+    )
+
+    return comentario
+
+def generar_encabezado():
+    encabezado = (
+        "GAMECONTENTENGINE\n"
+        "GENERADOR DE CONTENIDO GAMING" 
+    )
+    return encabezado
+
 with open(
     "games.json",
     "r",
@@ -89,11 +121,48 @@ if datos_juego:
         tipo
     )
 
+    hashtags = generar_hashtags(
+    juego_encontrado
+    )
+
+    comentario = generar_comentario()
+    encabezado = generar_encabezado()
+
     print("\n🎬 TITULO:")
     print(titulo)
     print("\n📝 DESCRIPCIÓN:")
     print(descripcion)
+    print("\n🏷️ HASHTAGS:")
+    print(hashtags)
+    print("\n📌 COMENTARIO:")
+    print(comentario)
 
+    with open(
+        "contenido.txt",
+        "w",
+        encoding="utf-8"
+    ) as archivo: 
+        
+        archivo.write(
+            f"{encabezado}\n\n"
+        )
+
+        archivo.write(
+            f"TITULO:\n{titulo}\n\n"
+        )
+
+        archivo.write(
+            f"DESCRIPCIÓN:\n{descripcion}\n\n"
+        )
+
+        archivo.write(
+            f"HASHTAGS:\n{hashtags}\n\n"
+        )
+
+        archivo.write(
+            f"COMENTARIO:\n{comentario}\n\n"
+        )
+ 
 else:   
     print(
         "\n❌ Juego no encontrado."
