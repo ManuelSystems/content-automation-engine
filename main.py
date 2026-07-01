@@ -1,4 +1,5 @@
 import json
+import os 
 
 def generar_titulo(juego,nivel,tipo):
     if tipo.lower() == "walkthrough":
@@ -40,7 +41,7 @@ def generar_hashtags(juego):
             f"#{palabra}"
         )
     
-    hashtags.append("#RetroGaming")
+    hashtags.append("#LegacyGaming")
     hashtags.append("#RetroGaming")
     hashtags.append("#FullRetroGaming")
 
@@ -55,6 +56,22 @@ def generar_comentario():
     )
 
     return comentario
+
+def generar_datagame(
+        juego,
+        datos_juego
+):
+    datagame = (
+        f"📚 DATAGAME\n\n"
+        f"🎮 {juego}\n\n"
+        f"🕹️ Plataforma: {datos_juego['plataforma']}\n"
+        f"🎭 Género: {datos_juego['genero']}\n"
+        f"🏢 Desarrolador: {datos_juego['desarrollador']}\n"
+        f"📅 Año de lanzamiento: {datos_juego['año']}\n"
+    )
+    return datagame
+
+
 
 def generar_encabezado():
     encabezado = (
@@ -82,7 +99,8 @@ nivel = input(
 tipo = input(
     "Tipo (Walkthrough/Shortplay): "
 )
-print(tipo)
+#para saber que tipo de contenido se va a generar, si es un walkthrough o un shortplay👇
+#print(tipo)
 
 datos_juego = game_database.get(juego)
 
@@ -126,6 +144,11 @@ if datos_juego:
     )
 
     comentario = generar_comentario()
+
+    datagame = generar_datagame(
+    juego_encontrado,
+    datos_juego
+)
     encabezado = generar_encabezado()
 
     print("\n🎬 TITULO:")
@@ -136,9 +159,20 @@ if datos_juego:
     print(hashtags)
     print("\n📌 COMENTARIO:")
     print(comentario)
+    print("\n📚 DATAGAME:")
+    print(datagame)
+
+    nombre_archivo = (
+        juego_encontrado.replace(" ", "_")
+    )
+
+    os.makedirs(
+       "output",
+       exist_ok=True
+    )
 
     with open(
-        "contenido.txt",
+        f"output/{nombre_archivo}.txt",
         "w",
         encoding="utf-8"
     ) as archivo: 
@@ -163,6 +197,10 @@ if datos_juego:
             f"COMENTARIO:\n{comentario}\n\n"
         )
  
+        archivo.write(
+            f"DATAGAME:\n{datagame}\n\n"
+        )
+
 else:   
     print(
         "\n❌ Juego no encontrado."

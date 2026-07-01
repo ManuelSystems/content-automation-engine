@@ -1,11 +1,15 @@
 {
     "Crash Bandicoot 3": {
         "plataforma": "PS1",
-        "genero": "Plataformas"
+        "genero": "Plataformas",
+        "desarrollador": "Naughty Dog",
+        "año": 1998
     },
 
     "Gran Turismo": {
         "plataforma": "PS1",
-        "genero": "Carreras"
+        "genero": "Carreras",
+        "desarrollador": "Polyphony Digital",
+        "año": 1997
     }
 }

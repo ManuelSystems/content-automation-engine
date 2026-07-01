@@ -2,14 +2,14 @@ GAMECONTENTENGINE
 GENERADOR DE CONTENIDO GAMING
 
 TITULO:
-NIVEL 1  Gameplay Completo 🚀
+NIVEL 1 100% WALKTHROUGH 🚀
 
 DESCRIPCIÓN:
 🎮Crash Bandicoot 3
 
-📍 Nivel: Nivel 1 
+📍 Nivel: Nivel 1
 
-🚀 Tipo: Walkthrough 
+🚀 Tipo: Walkthrough
 
 HASHTAGS:
 #Crash #Bandicoot #3 #RetroGaming #RetroGaming #FullRetroGaming
@@ -18,4 +18,15 @@ COMENTARIO:
 🔥 Si te gustó este contenido, suscríbete para más videojuegos.
 
 🎮 FullRetroGaming
+
+DATAGAME:
+📚 DATAGAME
+
+🎮 Crash Bandicoot 3
+
+🕹️ Plataforma: PS1
+🎭 Género: Plataformas
+🏢 Desarrolador: Naughty Dog
+📅 Año de lanzamiento: 1998
+
 
