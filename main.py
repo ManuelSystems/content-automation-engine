@@ -71,7 +71,18 @@ def generar_datagame(
     )
     return datagame
 
-
+def generar_community_post(
+        juego,
+        nivel
+):
+    post = (
+        f"🔥 Nuevo video disponible\n\n"
+        f"🎮 {juego}\n"
+        f"📍 {nivel}\n\n"
+        f"¿Recuerdas este clasico?\n\n"
+        f"👇 Déjame tu opinión de los comentarios"
+    )
+    return post 
 
 def generar_encabezado():
     encabezado = (
@@ -149,6 +160,12 @@ if datos_juego:
     juego_encontrado,
     datos_juego
 )
+    
+    community_post = generar_community_post(
+        juego_encontrado,
+        nivel
+    )
+
     encabezado = generar_encabezado()
 
     print("\n🎬 TITULO:")
@@ -161,6 +178,8 @@ if datos_juego:
     print(comentario)
     print("\n📚 DATAGAME:")
     print(datagame)
+    print("\n📢 COMMUNITY POST:")
+    print(community_post)
 
     nombre_archivo = (
         juego_encontrado.replace(" ", "_")
@@ -201,6 +220,10 @@ if datos_juego:
             f"DATAGAME:\n{datagame}\n\n"
         )
 
+        archivo.write(
+            f"COMMUNITY POST:\n"
+            f"{community_post}\n\n"
+        )
 else:   
     print(
         "\n❌ Juego no encontrado."
