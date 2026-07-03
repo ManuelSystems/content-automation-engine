@@ -1,88 +1,14 @@
 import json
 import os 
 
-def generar_titulo(juego,nivel,tipo):
-    if tipo.lower() == "walkthrough":
-        titulo = (
-            f"{nivel.upper()} "
-            f"100% WALKTHROUGH 🚀" 
-        )
-    elif tipo.lower() == "shortplay":
-        titulo = (
-            f"{nivel.upper()} "
-            f"⚡Momento Clave"
-        )    
-    else: 
-        titulo = (
-            f"{nivel.upper()} "
-            f"Gameplay Completo 🚀"
-        )
-    return titulo
-
-def generar_descripcion(
-        juego,
-        nivel,
-        tipo,
-):
-
-    descripcion = (
-        f"🎮{juego}\n\n"
-        f"📍 Nivel: {nivel}\n\n"
-        f"🚀 Tipo: {tipo}"
-    )
-    return descripcion
-
-def generar_hashtags(juego):
-    palabras = juego.split()
-    hashtags = [] 
-
-    for palabra in palabras: 
-        hashtags.append(
-            f"#{palabra}"
-        )
-    
-    hashtags.append("#LegacyGaming")
-    hashtags.append("#RetroGaming")
-    hashtags.append("#FullRetroGaming")
-
-    return " ".join(hashtags)
-
-def generar_comentario():
-
-    comentario = (
-        "🔥 Si te gustó este contenido, "
-        "suscríbete para más videojuegos.\n\n"
-        "🎮 FullRetroGaming"
-    )
-
-    return comentario
-
-def generar_datagame(
-        juego,
-        datos_juego
-):
-    datagame = (
-        f"📚 DATAGAME\n\n"
-        f"🎮 {juego}\n\n"
-        f"🕹️ Plataforma: {datos_juego['plataforma']}\n"
-        f"🎭 Género: {datos_juego['genero']}\n"
-        f"🏢 Desarrolador: {datos_juego['desarrollador']}\n"
-        f"📅 Año de lanzamiento: {datos_juego['año']}\n"
-    )
-    return datagame
-
-def generar_community_post(
-        juego,
-        nivel
-):
-    post = (
-        f"🔥 Nuevo video disponible\n\n"
-        f"🎮 {juego}\n"
-        f"📍 {nivel}\n\n"
-        f"¿Recuerdas este clasico?\n\n"
-        f"👇 Déjame tu opinión de los comentarios"
-    )
-    return post 
+#importar generadores y funciones 
+from generators.title_generator import generar_titulo
+from generators.description_generator import generar_descripcion
+from generators.hashtags_generator import generar_hashtags
+from generators.comment_generator import generar_comentario
+from generators.datagame_generator import generar_datagame
+from generators.community_post_generator import generar_community_post
+from generators.content_generator import generar_contenido_completo
 
 def generar_encabezado():
     encabezado = (
@@ -113,8 +39,6 @@ tipo = input(
 #para saber que tipo de contenido se va a generar, si es un walkthrough o un shortplay👇
 #print(tipo)
 
-datos_juego = game_database.get(juego)
-
 datos_juego = None
 juego_encontrado = None 
 
@@ -142,7 +66,7 @@ if datos_juego:
         juego_encontrado,
         nivel,
         tipo
-        )
+    )
 
     descripcion = generar_descripcion(
         juego_encontrado,
@@ -151,35 +75,34 @@ if datos_juego:
     )
 
     hashtags = generar_hashtags(
-    juego_encontrado
+        juego_encontrado
     )
 
     comentario = generar_comentario()
 
     datagame = generar_datagame(
-    juego_encontrado,
-    datos_juego
-)
+        juego_encontrado,
+        datos_juego
+    )
     
     community_post = generar_community_post(
         juego_encontrado,
         nivel
     )
 
+    contenido_completo = generar_contenido_completo(
+        titulo,
+        descripcion,
+        hashtags,
+        comentario,
+        datagame,
+        community_post
+    )
+
     encabezado = generar_encabezado()
 
-    print("\n🎬 TITULO:")
-    print(titulo)
-    print("\n📝 DESCRIPCIÓN:")
-    print(descripcion)
-    print("\n🏷️ HASHTAGS:")
-    print(hashtags)
-    print("\n📌 COMENTARIO:")
-    print(comentario)
-    print("\n📚 DATAGAME:")
-    print(datagame)
-    print("\n📢 COMMUNITY POST:")
-    print(community_post)
+    #salida completa de todo 
+    print(contenido_completo)
 
     nombre_archivo = (
         juego_encontrado.replace(" ", "_")
@@ -195,35 +118,15 @@ if datos_juego:
         "w",
         encoding="utf-8"
     ) as archivo: 
-        
+
         archivo.write(
             f"{encabezado}\n\n"
         )
-
+      
         archivo.write(
-            f"TITULO:\n{titulo}\n\n"
+            contenido_completo
         )
 
-        archivo.write(
-            f"DESCRIPCIÓN:\n{descripcion}\n\n"
-        )
-
-        archivo.write(
-            f"HASHTAGS:\n{hashtags}\n\n"
-        )
-
-        archivo.write(
-            f"COMENTARIO:\n{comentario}\n\n"
-        )
- 
-        archivo.write(
-            f"DATAGAME:\n{datagame}\n\n"
-        )
-
-        archivo.write(
-            f"COMMUNITY POST:\n"
-            f"{community_post}\n\n"
-        )
 else:   
     print(
         "\n❌ Juego no encontrado."

@@ -2,12 +2,12 @@ GAMECONTENTENGINE
 GENERADOR DE CONTENIDO GAMING
 
 TITULO:
-NIVEL 1 ⚡Momento Clave
+NIVEL 3 ⚡Momento Clave
 
 DESCRIPCIÓN:
 🎮Gran Turismo
 
-📍 Nivel: nivel 1
+📍 Nivel: Nivel 3
 
 🚀 Tipo: Shortplay
 
@@ -29,4 +29,14 @@ DATAGAME:
 🏢 Desarrolador: Polyphony Digital
 📅 Año de lanzamiento: 1997
 
+
+COMMUNITY POST:
+🔥 Nuevo video disponible
+
+🎮 Gran Turismo
+📍 Nivel 3
+
+¿Recuerdas este clasico?
+
+👇 Déjame tu opinión de los comentarios
 
