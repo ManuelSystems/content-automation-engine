@@ -9,6 +9,7 @@ from generators.comment_generator import generar_comentario
 from generators.datagame_generator import generar_datagame
 from generators.community_post_generator import generar_community_post
 from generators.content_generator import generar_contenido_completo
+from generators.save_generator import guardar_contenido
 
 def generar_encabezado():
     encabezado = (
@@ -108,27 +109,32 @@ if datos_juego:
         juego_encontrado.replace(" ", "_")
     )
 
-    os.makedirs(
-       "output",
-       exist_ok=True
-    )
+    # os.makedirs(
+    #    "output",
+    #    exist_ok=True
+    # )
 
-    with open(
-        f"output/{nombre_archivo}.txt",
-        "w",
-        encoding="utf-8"
-    ) as archivo: 
+    # with open(
+    #     f"output/{nombre_archivo}.txt",
+    #     "w",
+    #     encoding="utf-8"
+    # ) as archivo: 
 
-        archivo.write(
-            f"{encabezado}\n\n"
-        )
+    #     archivo.write(
+    #         f"{encabezado}\n\n"
+    #     )
       
-        archivo.write(
-            contenido_completo
-        )
+    #     archivo.write(
+    #         contenido_completo
+    #     )
+
+    guardar_contenido(
+        nombre_archivo,
+        encabezado,
+        contenido_completo
+    )
 
 else:   
     print(
         "\n❌ Juego no encontrado."
     )
-        
