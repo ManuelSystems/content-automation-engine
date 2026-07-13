@@ -3,7 +3,7 @@ def generar_datagame(
         datos_juego
 ):
     datagame = (
-        f"📚 DATAGAME\n\n"
+        #f"📚 DATAGAME\n\n"
         f"🎮 {juego}\n\n"
         f"🕹️ Plataforma: {datos_juego['plataforma']}\n"
         f"🎭 Género: {datos_juego['genero']}\n"

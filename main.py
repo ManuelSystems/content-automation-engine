@@ -1,4 +1,3 @@
-import json
 import os 
 
 #importar generadores y funciones 
@@ -12,14 +11,13 @@ from generators.content_generator import generar_contenido_completo
 from generators.save_generator import guardar_contenido
 from generators.search_generator import buscar_juego
 from generators.header_generator import generar_encabezado
+from generators.game_loader import cargar_juegos
+from generators.id_generator import generar_id
 
-with open(
-    "games.json",
-    "r",
-    encoding="utf-8"
-) as file:
+game_database = cargar_juegos()
 
-    game_database = json.load(file)
+contenido_id = generar_id()
+print(contenido_id)
 
 juego = input(
     "Nombre del juego: "
@@ -37,12 +35,6 @@ tipo = input(
 
 datos_juego = None
 juego_encontrado = None 
-
-#for nombre_juego in game_database:
- #   if juego.lower() in nombre_juego.lower():
-  #      juego_encontrado = nombre_juego
-   #     datos_juego = game_database[nombre_juego]
-    #    break
 
 juego_encontrado, datos_juego = buscar_juego(
     juego,
@@ -112,25 +104,6 @@ if datos_juego:
     nombre_archivo = (
         juego_encontrado.replace(" ", "_")
     )
-
-    # os.makedirs(
-    #    "output",
-    #    exist_ok=True
-    # )
-
-    # with open(
-    #     f"output/{nombre_archivo}.txt",
-    #     "w",
-    #     encoding="utf-8"
-    # ) as archivo: 
-
-    #     archivo.write(
-    #         f"{encabezado}\n\n"
-    #     )
-      
-    #     archivo.write(
-    #         contenido_completo
-    #     )
 
     guardar_contenido(
         nombre_archivo,
