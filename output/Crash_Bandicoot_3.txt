@@ -1,15 +1,22 @@
+========================================
 GAMECONTENTENGINE
 GENERADOR DE CONTENIDO GAMING
+========================================
 
+🎮 Proyecto: FullRetroGaming
+🎮 Juego: Crash Bandicoot 3
+🚀 Tipo: Walkthrough
+🕹️ Plataforma: PS1
+========================================
 🎬 TITULO:
-NIVEL 15 ⚡Momento Clave
+NIVEL 5 100% WALKTHROUGH 🚀
 
 📝 DESCRIPCION:
 🎮Crash Bandicoot 3
 
-📍 Nivel: Nivel 15
+📍 Nivel: nivel 5
 
-🚀 Tipo: Shortplay
+🚀 Tipo: Walkthrough
 
 🏷️ HASHTAGS:
 #Crash #Bandicoot #3 #LegacyGaming #RetroGaming #FullRetroGaming
@@ -34,8 +41,9 @@ NIVEL 15 ⚡Momento Clave
 🔥 Nuevo video disponible
 
 🎮 Crash Bandicoot 3
-📍 Nivel 15
+📍 nivel 5
 
 ¿Recuerdas este clasico?
 
 👇 Déjame tu opinión de los comentarios
+

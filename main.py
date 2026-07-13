@@ -10,13 +10,8 @@ from generators.datagame_generator import generar_datagame
 from generators.community_post_generator import generar_community_post
 from generators.content_generator import generar_contenido_completo
 from generators.save_generator import guardar_contenido
-
-def generar_encabezado():
-    encabezado = (
-        "GAMECONTENTENGINE\n"
-        "GENERADOR DE CONTENIDO GAMING" 
-    )
-    return encabezado
+from generators.search_generator import buscar_juego
+from generators.header_generator import generar_encabezado
 
 with open(
     "games.json",
@@ -43,12 +38,17 @@ tipo = input(
 datos_juego = None
 juego_encontrado = None 
 
-for nombre_juego in game_database:
-    if juego.lower() in nombre_juego.lower():
-        juego_encontrado = nombre_juego
-        datos_juego = game_database[nombre_juego]
-        break
+#for nombre_juego in game_database:
+ #   if juego.lower() in nombre_juego.lower():
+  #      juego_encontrado = nombre_juego
+   #     datos_juego = game_database[nombre_juego]
+    #    break
 
+juego_encontrado, datos_juego = buscar_juego(
+    juego,
+    game_database
+)
+                        
 if datos_juego:
 
     print("\n🎮 Juego:", juego_encontrado)
@@ -100,7 +100,11 @@ if datos_juego:
         community_post
     )
 
-    encabezado = generar_encabezado()
+    encabezado = generar_encabezado(
+        juego_encontrado,
+        tipo, 
+        datos_juego["plataforma"]
+    )
 
     #salida completa de todo 
     print(contenido_completo)
