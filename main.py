@@ -14,10 +14,11 @@ from generators.header_generator import generar_encabezado
 from generators.game_loader import cargar_juegos
 from generators.id_generator import generar_id
 
-game_database = cargar_juegos()
+from engine.engine_loader import cargar_estado_motor
+estado_motor =  cargar_estado_motor()
+print(estado_motor)
 
-contenido_id = generar_id()
-print(contenido_id)
+game_database = cargar_juegos()
 
 juego = input(
     "Nombre del juego: "
@@ -30,6 +31,10 @@ nivel = input(
 tipo = input(
     "Tipo (Walkthrough/Shortplay): "
 )
+
+contenido_id = generar_id(tipo)
+print(contenido_id)
+
 #para saber que tipo de contenido se va a generar, si es un walkthrough o un shortplay👇
 #print(tipo)
 

@@ -1,12 +1,20 @@
+========================================
 GAMECONTENTENGINE
 GENERADOR DE CONTENIDO GAMING
+========================================
+
+🎮 Proyecto: FullRetroGaming
+🎮 Juego: Gran Turismo
+🚀 Tipo: Walkthrough
+🕹️ Plataforma: PS1
+========================================
 🎬 TITULO:
-NIVEL 5 100% WALKTHROUGH 🚀
+NIVEL 40 100% WALKTHROUGH 🚀
 
 📝 DESCRIPCION:
 🎮Gran Turismo
 
-📍 Nivel: Nivel 5
+📍 Nivel: nivel 40
 
 🚀 Tipo: Walkthrough
 
@@ -19,8 +27,6 @@ NIVEL 5 100% WALKTHROUGH 🚀
 🎮 FullRetroGaming
 
 📚 DATAGAME:
-📚 DATAGAME
-
 🎮 Gran Turismo
 
 🕹️ Plataforma: PS1
@@ -33,7 +39,7 @@ NIVEL 5 100% WALKTHROUGH 🚀
 🔥 Nuevo video disponible
 
 🎮 Gran Turismo
-📍 Nivel 5
+📍 nivel 40
 
 ¿Recuerdas este clasico?
 

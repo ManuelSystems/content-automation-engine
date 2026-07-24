@@ -1,7 +1,7 @@
 import json
 def cargar_juegos():
     with open(
-        "games.json",
+        "database/games.json",
         "r",
         encoding="utf-8"
     ) as file:
