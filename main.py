@@ -14,15 +14,24 @@ from generators.header_generator import generar_encabezado
 from generators.game_loader import cargar_juegos
 from generators.id_generator import generar_id
 
+
 from engine.engine_loader import cargar_estado_motor
+from engine.engine_manager import guardar_estado_motor
+
+estado = cargar_estado_motor()
+
+estado["version"] = "5.1"
+
+guardar_estado_motor(estado)
+
 estado_motor =  cargar_estado_motor()
-print(estado_motor)
 
 game_database = cargar_juegos()
 
+
 juego = input(
     "Nombre del juego: "
-)
+)   
 
 nivel = input(
     "Nombre del nivel: "
