@@ -115,12 +115,14 @@ if datos_juego:
     #salida completa de todo 
     print(contenido_completo)
 
-    nombre_archivo = (
-        juego_encontrado.replace(" ", "_")
-    )
+    #nombre_archivo = (
+     #   juego_encontrado.replace(" ", "_")
+    #)
 
     guardar_contenido(
-        nombre_archivo,
+        juego_encontrado,
+        tipo,
+        contenido_id,
         encabezado,
         contenido_completo
     )

@@ -1,21 +1,42 @@
-import os
+import os 
 
 def guardar_contenido(
-        nombre_archivo,
+        juego, 
+        tipo, 
+        contenido_id,
         encabezado,
         contenido
-): 
-    os.makedirs(
+):
+    carpeta_juego = juego.replace(" ","_")
+    carpeta_tipo = tipo.strip().lower()
+
+    ruta = os.path.join(
         "output",
-        exist_ok=True 
+        carpeta_juego,
+        carpeta_tipo
+    )
+
+    os.makedirs(
+        ruta, 
+        exist_ok=True
+    )
+
+    nombre_id = contenido_id.replace(
+        "ID: ",
+        ""
+    )
+
+    ruta_archivo = os.path.join(
+        ruta,
+        f"{nombre_id}.txt"
     )
 
     with open(
-        f"output/{nombre_archivo}.txt",
+        ruta_archivo,
         "w",
         encoding="utf-8"
     ) as archivo:
-        
+
         archivo.write(
             f"{encabezado}\n"
         )
@@ -23,3 +44,4 @@ def guardar_contenido(
         archivo.write(
             f"{contenido}\n"
         )
+
