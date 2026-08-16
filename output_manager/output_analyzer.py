@@ -143,10 +143,61 @@ def analizar_output():
 
         resultados.append(resultado)
 
-        print("\n=====================================")
-        print("📊 RESUMEN DE ANALISIS")
-        print("=====================================")
-        
-        print(
-            f"📄 Archivos Analizados: {len(resultados)}"
-        )        
+    print("\n=====================================")
+    print("📊 RESUMEN DE ANALISIS")
+    print("=====================================")
+
+    print(
+        f"📄 Archivos Analizados: {len(resultados)}"
+    )
+
+    errores = 0
+    advertencias = 0 
+    correctos = 0 
+
+    for resultado in resultados: 
+
+        if resultado["errores"]:
+            errores += 1
+
+        elif resultado["advertencias"]:
+            advertencias += 1
+
+        else: 
+            correctos += 1
+
+    print(
+        f"🚨 Errores: {errores}"
+    )
+
+    print(
+        f"⚠️ Advertencias {advertencias}"
+    )
+
+    print(
+        f"✅ Correctos: {correctos}"
+    )
+
+    print("\n=========================================")
+    print("🚨 ARCHIVOS CON PROBLEMAS")
+    print("===========================================")
+
+    for resultado in resultados:
+
+        if resultado["errores"] or resultado["advertencias"]:
+
+            print(
+                f"\n❌ {resultado['archivo']}"
+            )
+
+        for error in resultado["errores"]:
+
+            print(
+                f"  └── ❌ {error}"
+            )
+
+        for advertencia in resultado["advertencias"]:
+
+            print(
+                f"  └── ⚠ {advertencia}"
+            )
