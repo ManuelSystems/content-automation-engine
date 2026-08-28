@@ -10,7 +10,7 @@ def analizar_archivo(ruta_archivo):
     errores = [] 
     advertencias = []
 
-    print("\n📃 ANALIZANDO ARCHIVO")
+    print("\n📃 ANALIZANDO ARCHIVO")    
     print("=" * 40)
 
     print("Nombre:", nombre_archivo)
@@ -45,10 +45,25 @@ def analizar_archivo(ruta_archivo):
 
     partes = ruta_archivo.parts
 
-    if len(partes) < 4: 
+    if len(partes) < 4:
         errores.append(
-            "Archivo ubicado directamente en output"
-        )
+        "Archivo ubicado directamente en output"
+    )
+
+    if len(partes) >= 4:
+
+        carpeta_tipo = partes[2]
+
+        if carpeta_tipo not in ["shortplay", "walkthrough"]:
+            errores.append(
+                f"Carpeta de contenido desconocida: {carpeta_tipo}"
+            )
+
+        if tipo != "desconocido" and carpeta_tipo != tipo:
+            errores.append(
+                f"El tipo del archivo no coincide con la carpeta: "
+                f"{tipo} != {carpeta_tipo}"
+            )
 
     print("Partes:", partes)
 
