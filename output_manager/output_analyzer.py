@@ -41,6 +41,23 @@ def analizar_archivo(ruta_archivo):
         ""
     )
 
+
+    if tipo != "desconocido":
+
+        if not (
+            nombre_limpio.startswith(
+                {
+                "shortplay": "SP",
+                "walkthrough": "WT"
+                }[tipo] + "-"
+            )
+            and nombre_limpio[3:].isdigit()
+            and len(nombre_limpio[3:]) == 3 
+        ):
+            errores.append(
+                f"El ID no coincide con el tipo de contenido: {nombre_limpio}"
+            )
+
     print("ID: ", nombre_limpio)
 
     partes = ruta_archivo.parts
@@ -154,7 +171,7 @@ def analizar_output():
             f"   └── {archivo}"
         )
 
-        resultado = analizar_archivo(archivo)
+        resultado = analizar_archivo(archivo)       
 
         resultados.append(resultado)
 
@@ -216,3 +233,5 @@ def analizar_output():
             print(
                 f"  └── ⚠ {advertencia}"
             )
+
+    return resultados
